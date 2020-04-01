@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>事件指令及修饰符</title>
+<style>
+  .front{
+    width: 300px;
+    height: 300px;
+    background:green;
+  }
+  .middle{
+    width: 200px;
+    height: 200px;
+    background: pink;
+  }
+  .inner{
+    width: 100px;
+    height: 100px;
+    background: gray;
+  }
+</style>
+</head>
+<body>
+
+  <div id="app">
+    <!-- <button v-on:click="handleC">打印吧</button> -->
+      <!-- <div class="front" @click.self="handleF">
+        front
+        <div class="middle" @click.self="handleM">
+          middle
+          <div class="inner" @click="handleI">
+            inner
+          </div>
+        </div> -->
+      <!-- </div> -->
+      <!-- 阻止默认行为 -->
+      <!-- <form action="https://www.baidu.com/?tn=78000241_21_hao_pg">
+        <!-<button @click.prevent="handleB">提交</button> -->
+      <!-- </form> --> 
+      <!-- 键盘事件的修饰符 键盘事件:按下,抬起,等-->
+      <!-- 当按下键盘任意键时触发 -->
+      <!-- <input type="text" @keydown="handleK"> -->
+      <!-- 当按下键盘enter键时触发 -->
+     <!-- 姓名: <input type="text" @keydown.13="handleK()"><br>
+     年龄: <input type="text" @keydowm.once="handleO"> -->
+     <button @click="handleO(123,$event)">确定</button>
+
+  </div> 
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      mesg:"哈哈哈哈",
+      mesg1:`<h2>加油吧,少年</h2>`,
+      mesg2:`<h3 style="color:green">加油吧,少年</h3>`
+    },
+    methods:{//配置对象中的固定属性,用于写模板页面中的事件回调函数,事件触发后会自动找到这里来
+            //这些方法也是装绑到了vm实例上,方法中的this指向实例对象
+    //   handleC:function(){ 
+    //     console.log('按钮被点击了')
+    //   }
+     //简写形式,省略冒号和function
+     handleF(){
+      console.log('front被点击了')
+     },
+     handleO(pr,event){
+      console.log('事件触发',pr,event)
+    },
+    // handleO(){
+    //   console.log('点击了按钮')
+    // } ,
+    //  handleM(){
+    //         console.log('middle被点击了')
+    //  }, 
+    //  handleI(){
+    //       console.log('inner被点击了')
+    //  },
+    //  handleB(){
+    //       console.log('按钮被点击了')
+    //  }
+    },
+   
+   
+  })
+
+</script>
+  
+</body>
+</html>

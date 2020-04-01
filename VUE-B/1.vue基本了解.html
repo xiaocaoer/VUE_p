@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 模板页面 其中可以直接读取到管理它的VUe实例身上的中的属性值,也就是配置对象data中的属性-->
+
+  <div id="app">
+    {{mesg}}
+  </div>
+
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip=false; 
+let vm = new Vue({
+  el:"#app",//element元素的意思,表示vm实例管理的区域
+  data:{//存放这个区域中动态显示的数据,其中的属性会转绑在vm实例上
+    mesg:"一分耕耘一分收获"
+  },
+
+  mounted:function(){ //mounted,加载完毕,vm实例管理的区域在页面加载完毕后触发的回调函数
+    console.log(this)//生命周期回调函数,this指向实例,vue实例调用的
+    setTimeout(() => {
+      console.log(this)//箭头函数的this,看外面有没有函数包裹,如果有,就是外层函数的this,如果没有就是window
+      this.mesg = "挺好的,不要再乱说了珍惜吧"
+    },2000)
+  },
+  // mounted:()=>{ //不能这么写!!!
+  //   console.log(this)
+  //   setTimeout(() => {
+  //     this.mesg = "挺好的,不要再乱说了珍惜吧"
+  //   },2000)
+  // }
+})
+// 响应式:当data中的数据发生变化时,页面会进行自动的更新
+
+// console.log(vm.$mounted)
+// console.log(vm.mesg)
+//响应式:当data中存放的数据发生变化时,页面会自动的更新
+</script>
+</html>

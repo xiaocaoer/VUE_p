@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <!-- <input type="text"  v-text="mesg" > -->
+    <!-- {{mesg}} -->
+
+    <!-- {{xiaocao}}报错,插值表达式中不能访问中定义的全局变量, -->
+    <!-- {{new Date()}}
+    {{Math.random()*10}} -->
+    <!-- <span v-text="mesg"></span>
+    <p v-text="mesg1"></p>
+    <p v-text="mesg2"></p>     -->
+    
+    <span v-html="mesg">
+      {{mesg2}}
+      <span>效率,速度,抓住重点</span>
+    </span>
+    <p v-html="mesg1"></p>
+    <p v-html="mesg2"></p>
+  </div>
+<!-- 
+  在JS中,,要想对HTML进行操作,就要获取DOM
+  而在HTML中,要想用JS的东西,可以React配合JSX语法
+  或者在vue环境下使用插值表达式等,而且 插值表达式中不是所以js东西都可以,只能写vm实例中的东西和被设置为白名单的几个DOM对象
+  例如:Date Math等
+-->
+
+<!--    v-text
+        v-html 
+      
+      -->
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+
+  new Vue({
+    el:"#app",
+    data:{
+      mesg:"哈哈哈哈",
+      mesg1:`<h2>加油吧,少年</h2>`,
+      mesg2:`<h3 style="color:green">加油吧,少年</h3>`
+    }
+  })
+
+</script>
+  
+</body>
+</html>

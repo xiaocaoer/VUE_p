@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+  <!-- 模板页面 -->
+  <!-- 数据双向绑定的指令 v-model ,
+    将输入类DOM节点的value值data中的属性关联起来,其输入类dom的初始value值从vue实例上读取,
+    当value值发生变化时,会有事件监听,同步的将value中存储在data中
+    自己去改变data中属性值时,页面也会同步更新
+  
+    双向绑定:改data,同步value,更新页面,改value,改变页面时,同步data
+  -->
+  <div id="app">
+    <input type="text"  v-model="mesg" >
+    {{mesg}}
+  </div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  new Vue({
+    el:"#app",
+    data:{
+      mesg:"哈哈哈哈"
+    }
+  })
+
+</script>
+  
+</body>
+</html>

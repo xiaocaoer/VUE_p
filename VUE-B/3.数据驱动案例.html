@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+ 
+  <div id="app">
+    <input type="text" placeholder="请输入内容" v-model="content">
+    <button v-on:click="handleC">Add</button>
+    <ul>
+      <li v-for="item in mesg">
+        {{item}}
+        <!-- {{a++}} 不能像写这种，只能写单个表达式的东西 -->
+        {{a+1}}
+        {{flag ? "真" : "假"}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- 遍历data中的数据去动态的生成li,遍历时的每一项可以直接在使用插值语法写到标签内容中 -->
+<!-- 点击add的时候,将handle将content值加入mes数组中 -->
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  //首先考虑的是data中的设计,比较合理的存储数据
+
+  new Vue({
+    el:"#app",
+    data:{
+      mesg:["吃饭","睡觉","学习"],
+      content:'',
+      a:1,
+      flag:"哈哈哈的"
+    },
+    methods:{
+      handleC(){
+        this.mesg.push(this.content)
+        //添加之后要清空value
+        this.content=''
+      }
+    }
+  })
+  let b = 1
+  let c = b++
+  console.log(c)
+
+</script>
+  
+</body>
+</html>
