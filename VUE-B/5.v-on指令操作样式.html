@@ -5,28 +5,80 @@
 <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Document</title>
+<style>
+  .up{
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    background-color: green;
+    color: lightcyan;
+  }
+  .down{
+    background-color: lightcoral;
+
+  }
+</style>
 </head>
 <body>
-  <!-- 模板页面 -->
-  <!-- 数据双向绑定的指令 v-model ,
-    将输入类DOM节点的value值data中的属性关联起来,其输入类dom的初始value值从vue实例上读取,
-    当value值发生变化时,会有事件监听,同步的将value中存储在data中
-    自己去改变data中属性值时,页面也会同步更新
-  
-    双向绑定:改data,同步value,更新页面,改value,改变页面时,同步data
-  -->
-  <div id="app">
-    <input type="text"  v-model="mesg" >
-    {{mesg}}
-  </div>
 
+  <div id="app">
+    <div  :class="className" @click="handleC" >
+      {{mesg}}
+    </div>
+    <!-- 原本写法 -->
+    <div style="color:blueviolet;font-size:30px;" v-html="mesg1"></div>
+    <!-- 将样式存储在data中 -->
+    <div v-bind:style="styleObj" v-html="mesg1"></div>
+
+    <!-- 
+      把style交给vue管理,但在data中没有对应的数据,其回努力去当JS语法解析
+    在html中,style样式的值是键值对,但是其整体是个字符串,
+    下面这个是让js中的vue解析样式,要想让他认识,就要把键值对包在对象中,用逗号连接
+    类似: font-size这种都要去掉- 写成小驼峰的形式
+    -->
+    <!-- <div :style="{color:'green',fontSize:'30px',}" v-html="mesg1"></div> -->
+
+
+  </div>
+<!--我们希望元素到底使用哪个class,由data中的属性来决定-->
 <script type="text/javascript" src="../js/vue.js"></script>
 <script>
+  Vue.config.productionTip = false
   new Vue({
     el:"#app",
     data:{
-      mesg:"哈哈哈哈"
-    }
+      mesg:"一位非常努力的小仙女",
+      mesg1:"莫急莫慌,一步一个脚印走起来",
+
+      //表达式的值为对象
+      // styleObj:{color: 'blueviolet',fontSize: '30px',},
+      //表达式的值为数组
+      styleObj:[{color: 'green'},{fontSize: '30px'}],
+      // styleObj:["color:blueviolet;font-size:30px;",],//不可以这么写
+
+
+      // className:"up down ",  //值为字符串
+      // className:{//值为对象
+      //   //属性名是class的名字,属性值为布尔值,为true表示使用该class,为false为不使用,可绑定事件动态操作
+      //   up:true,
+      //   down:false
+      // },
+      // className:["up down "],//值为数组包字符串
+      // className:[//值为数组包对象
+      //   {up:true},
+      //   {down:false}
+      //   ],     
+       className:[//值为数组包字符串和对象
+        "up",
+        {down:true}
+        ],
+    },
+    methods:{
+        handleC(){
+          this.className[1].down = !this.className[1].down
+        },
+      }
   })
 
 </script>

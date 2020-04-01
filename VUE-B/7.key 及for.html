@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+<!-- 
+  <div id="app">
+  <div v-if="!flag" :key="1">
+    <label >姓名: </label>
+    <input type="text" >
+  </div>
+  <div  v-if="flag" :key="2">
+    <label >电话:</label>
+    <input type="text" >
+  </div>
+  </div> -->
+
+<div id="app">
+  <!-- //对象的遍历,拿到的第一个是属性值,第二个是属性名,第三个是像数组一样的下标,从0开始 -->
+ <!-- <ul>
+    <li v-for="val in list1">
+      {{val}}
+    </li>
+  </ul>
+   <ul>
+    <li v-for="(val,key,index ) in list1">
+      属性值是:{{val}} 其对象的属性名是:{{key}} 其是对象中的第{{index}}个属性, index 从0算起
+    </li>
+  </ul>  -->
+  <!-- 数组的遍历 -->
+
+  <ul>
+    <li v-for="item in  list2" v-html="item">
+      <!-- {{item}} -->
+    </li>
+  </ul>
+  <ul>
+    <li v-for="(item,index) in  list2" :key="index">
+      <span>
+        {{item}}的下标是{{index}}
+      </span>
+    </li>
+  </ul>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      mesg:"哈哈哈哈",
+      flag:false,
+      list1:{
+        name:"小草儿",
+        age:18,
+      },
+      list2:['小妹','小草','小芝麻']
+    },
+    methods:{
+
+    }
+  })
+
+</script>
+  
+</body>
+</html>

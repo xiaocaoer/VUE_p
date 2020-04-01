@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <div v-if="!flag">
+      <label>你的座右铭是: </label> <input type="text"  v-model="mesg" >
+    </div>  
+    <div v-else-if="!flag">
+      <label>关于座右铭的故事是: </label> <br>
+      <textarea name="story" id="at" cols="30" rows="10"></textarea>
+    </div>
+   <!-- <br><br>这行不注释为不连用,报错 -->
+   <!-- <div v-else="">
+    <span>您输入的座右铭是: </span> {{mesg}}
+   </div> -->
+  </div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  new Vue({
+    el:"#app",
+    data:{
+      mesg:"哈哈哈哈",
+      flag:false,
+    },
+    methods:{
+      // handleC(){
+      //   this.flag = ! this.flag
+      // }
+    }
+  })
+
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+  [v-cloak] { display: none }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <ul v-once>
+    <li>小</li>
+    <li>草</li>
+    <li>儿</li>
+    {{mesg}}
+    {{mesg}}
+    {{mesg}}
+    {{mesg}}
+    {{mesg}}
+  </ul>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      mesg:"哈哈哈哈",
+      flag:false,
+      list1:{
+        name:"小草儿",
+        age:18,
+      },
+      list2:['小妹','小草','小芝麻']
+    },
+    methods:{
+
+    }
+  })
+
+</script>
+  
+</body>
+</html>
