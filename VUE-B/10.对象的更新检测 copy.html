@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    span{
+      /* sapn是行内元素,设置宽高不起作用 */
+      display: inline-block;
+      width: 50px;
+      border: cadetblue,solid, 1px;
+      text-align: center;
+    }
+    li{
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <ul>
+    <li v-for="(val,key,index) in list">
+      <span> {{index}}</span>
+      <span> {{key}}</span>
+      <span> {{val}}</span>
+    </li>
+  </ul>
+  <button @click="hangdleC">删除属性</button>
+  <button @click="hangdleD">增加属性</button>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      list:
+          {name:"仙女",age:18,hoby:"冬雨",star:"摩羯"},
+    },
+    methods:{
+        hangdleC(){
+          // delete this.list.star 页面不会变化
+          // 正确写法：
+          // 参数: 改变的是哪个对象,这个对象中的哪个属性
+          Vue.delete(this.list,"star") 
+          // this.$delete(this.list,"star")
+        },
+        hangdleD(){ 
+          // this.list.lover = "胡歌"页面不会变化
+          Vue.set(this.list,"lover","胡歌")
+          this.$set(this.list,"lover","胡歌")
+        }
+    }
+  })
+
+</script>
+  
+</body>
+</html>

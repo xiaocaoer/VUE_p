@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+  <style>
+   
+    th,td{
+      width: 50px;
+      height: 30px;
+      border: 1px solid hotpink;
+    }
+    th{
+      text-align: left;
+    }
+    td{
+      width: 160px;
+    }
+    table{
+      border: 2px solid green;
+    }
+    [v-cloak] { display: none }
+    label{
+      width: 40px;
+      display: inline-block;
+      font-weight: 700;
+    }
+    input{
+      font-weight: 600;
+      color: indigo;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- 在插值表达式中写计算属性的函数名,vue会自动调用这个函数,将其返回值渲染在页面上 -->
+  <!-- <table v-cloak cellspacing="0">
+    <tr>
+      <th>姓: </th><td>{{firstName}}</td>
+    </tr>
+    <tr>
+      <th>名: </th><td>{{lastName}}</td>
+    </tr>   
+    <tr>
+      <th>全名: </th><td>{{fullName}}</td>
+    </tr> -->
+  <!-- </table> -->
+  <form action="" v-cloak>
+    <label for="in1">姓:</label>
+    <input type="text"  id="in1" placeholder="请输入您的姓"  v-model="firstName">
+    <br>
+    <label for="in2">名:</label>
+    <input type="text"  id="in1" placeholder="请输入您的名" v-model="lastName">
+    <br>
+    <label for="in2">全名:</label>
+    <input type="text"  id="in1" placeholder="请输入您的全名" v-model="fullName">
+  </form>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      firstName:"小",
+      lastName:"草儿",
+    },
+    methods:{
+        // hangdleD(){ 
+        // }
+    },
+    //  属性的set和get方法
+    computed:{
+        // fullName(){
+        //   console.log('计算属性被调用了')
+        //   return `${this.firstName}&${this.lastName}`
+        // }
+        //上面写法本质是:
+        // fullName:{
+        //   get(){
+        //     console.log('计算属性被调用了')
+        //     return `${this.firstName}&${this.lastName}`
+        //   }
+        // }
+        //要写属性的set方法就要写get
+        fullName:{
+          get(){//读取属性值时被调用
+            console.log('计算属性被读取')
+            return `${this.firstName}&${this.lastName}`
+          },
+          //set方法的参数是即将设置为fullName属性的值
+          set(str){ //监视计算属性的值,当值发生变化时被调用
+            console.log('计算属性被修改了') 
+            //将计算属性假值,同步到它的依赖上,让这个值成为计算属性的真值
+            let arr = str.split('&')
+            this.firstName = arr[0] 
+            this.lastName = arr[1] 
+          }
+        }
+      }
+  })
+  //在页面上直接修改计算属性,这个方法就会被调用,没有这个方法会报错
+
+  //fullName的值是通过firstName已经lastName,拼接而成的,
+  //页面上改动后,只是页面表明变化了,去读取fullName,它并没有变,这个改为的值为假值
+  //要想把内容同步到fullName属性中,就要从根本上解决问题,修改其依赖的firstName 和lastName的值
+ 
+  //set方法监视计算属性的值(假值),当值发生变化时,被调用
+  //将假值设置给计算属性的依赖属性,让假值变成真,
+  //实现的计算属性值的更新
+console.log(vm.fullName)
+</script>
+  
+</body>
+</html>

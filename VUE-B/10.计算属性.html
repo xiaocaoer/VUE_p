@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    span{
+      /* sapn是行内元素,设置宽高不起作用 */
+      display: inline-block;
+      width: 50px;
+      border: cadetblue,solid, 1px;
+      text-align: center;
+    }
+    li{
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- 在插值表达式中写计算属性的函数名,vue会自动调用这个函数,将其返回值渲染在页面上 -->
+  <div>{{hangdleD}}</div>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      list:
+          {name:"仙女",age:18,hoby:"冬雨",star:"摩羯"},
+    },
+    methods:{
+        // hangdleD(){ 
+        // }
+    },
+    computed:{//计算属性就是配置对象中的一个属性,其值是一个对象
+      
+      //完全形式
+      // hangdleD:function(){
+      //   return '尽人事听天命'
+      // },    
+      //语法糖  
+      hangdleD(){
+        return '尽人事听天命'
+      },
+      //语法糖形式的本质
+      hangdleD:{
+        get(){
+          return '尽人事听天命'
+        }
+      }
+    }
+  })
+
+</script>
+  
+</body>
+</html>

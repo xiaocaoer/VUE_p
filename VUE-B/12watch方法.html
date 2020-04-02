@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>通过watch属性实现全名案例</title>
+<style>
+  span{
+    display: inline-block;
+    width: 50px;
+  }
+</style>
+</head>
+<body>
+  <!-- //模板页面 -->
+  <div id="app">
+    <!--  v-model实现数据双向绑定-->
+    <span>姓:</span><input type="text"placeholder="请输入您的姓" v-model="firstName" ><br>
+    <span>名:</span><input type="text"placeholder="请输入您的名" v-model="lastName" ><br>
+    <span>姓名:</span><input type="text"placeholder="请输入您的姓名" v-model="fullName">
+  </div>
+ 
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    el:'#app',
+    data:{
+      firstName:"小",
+      lastName:"草",
+      fullName:"小-草"
+    },
+    watch:{
+      //在watche侦听器中对被依赖的属性,firstName 和 lastName属性进行监听
+      //当被依赖的这两个属性改变时,立马更新 通过依赖属性拼接成的fullName属性
+      firstName(val){//firstName的侦听回调,
+        console.log('有人修改了firstName')
+        //参数val是其修改后的值 更新fullName
+        this.fullName=`${this.firstName}-${this.lastName} `
+      },
+      lastName(val){//lastName的侦听回调
+        console.log('有人修改了lastName')
+        this.fullName=`${this.firstName}-${this.lastName} `
+
+      }
+    }
+
+  })
+</script>
+  
+</body>
+</html>

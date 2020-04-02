@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+  <style>
+
+    [v-cloak] { display: none }
+    label{
+      width: 40px;
+      display: inline-block;
+      font-weight: 700;
+    }
+    input{
+      font-weight: 600;
+      color: indigo;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <form action="" v-cloak>
+    <label for="in1">姓:</label>
+    <input type="text"  id="in1" placeholder="请输入您的姓"  v-model="firstName">
+    <br>
+    <label for="in2">名:</label>
+    <input type="text"  id="in1" placeholder="请输入您的名" v-model="lastName">
+    <br>
+    <label for="in2">全名:</label>
+    <input type="text"  id="in1" placeholder="请输入您的全名" v-model="fullName">
+  </form>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    el:"#app",
+    data:{
+      firstName:"小",
+      lastName:"草儿",
+    },
+    methods:{
+
+    },
+    computed:{
+        //set和get方法设置属性的第1种写法,先写属性名再写大括号里面写get 和set
+        fullName:{
+          get(){
+            // console.log('属性被读取')
+            return `${this.firstName}&${this.lastName}`
+        },
+          set(str){
+            // console.log('属性被修改了') 
+            let arr = str.split('&')
+            this.firstName = arr[0] 
+            this.lastName = arr[1] 
+          }
+        },
+
+
+
+      }
+  })
+
+//普通对象中 属性的set 和get 方法的使用
+  let p1 = {
+    name:"小草儿",
+    age:16,
+    get hobby(){
+      console.log('有人在读取hobby属性了')
+      return this._hobby
+    },
+    set hobby(val){//监听属性,当属性值要被修改式调用
+      console.log('有人要修改hobby属性了')
+      this._hobby=val
+    }
+  }
+
+  p1.hobby="打游戏"
+  console.log(p1.hobby)
+
+//  set和get 方法配合Object.defineProperty()使用,为对象添加一个依赖于其他属性的属性
+// Object.defineProperty()有三个参数
+// 参数1:给那个对象添加属性,
+// 参数2:属性名是
+// 参数3:属性的值,属性描述对象,其中用到set和get 
+
+Object.defineProperty(p1,'name&age',{
+  get(){
+    console.log('有人要读取name&age属性')
+    return `${this.name}-${this.age}`
+  },
+  set(val){
+    console.log('有人要修改name&age属性')
+    let arr = val.split('-')
+    this.name=arr[0]
+    this.age=arr[1]
+  }
+})
+console.log(p1["name&age"])
+p1["name&age"] = "小孩-20"
+console.log(p1["name&age"])
+
+
+
+</script>
+  
+</body>
+</html>
