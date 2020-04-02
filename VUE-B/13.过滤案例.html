@@ -4,47 +4,111 @@
  <meta charset="UTF-8">
 <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>通过watch属性实现全名案例</title>
+<title>过滤与排序案例</title>
 <style>
-  span{
-    display: inline-block;
-    width: 50px;
-  }
+  [v-cloak] { display:none}
 </style>
 </head>
 <body>
   <!-- //模板页面 -->
-  <div id="app">
-    <!--  v-model实现数据双向绑定-->
-    <span>姓:</span><input type="text"placeholder="请输入您的姓" v-model="firstName" ><br>
-    <span>名:</span><input type="text"placeholder="请输入您的名" v-model="lastName" ><br>
-    <span>姓名:</span><input type="text"placeholder="请输入您的姓名" v-model="fullName">
+  <div id="app" v-cloak>
+    <label for="in1">列表过滤框:</label>
+    <input type="text"  placeholder="请输入您想要显示的数据" v-model="content">
+    <ul>
+      <li v-for="(item,index) in showList" :key="index">
+        {{item.name}}---{{item.age}}---{{item.hobby}}
+      </li>
+    </ul>
+    <button @click="handleUp">按年龄升序</button>
+    <button @click="handleDown">按年龄降序</button>
+    <button @click="handle">按原本排序</button>
   </div>
+ 
  
 <script type="text/javascript" src="../js/vue.js"></script>
 <script>
   Vue.config.productionTip = false
+  //思路:
+  //下面列表中显示的数据依赖于基础数据和过滤框的输入内容
+  // 基础数据和输入框数据写data中
+  // 列表事件写在计算属性中
   let vm = new Vue({
-    el:'#app',
+    el:"#app",
     data:{
-      firstName:"小",
-      lastName:"草",
-      fullName:"小-草"
+      order:0,//0表示原本顺序,1 升序,,,-1 降序
+      content:"",
+      aList:[
+        {name:"小爱啊",age:18,hobby:"学习"},
+        {name:"小高",age:19,hobby:"睡觉"},
+        {name:"小新",age:30,hobby:"打游戏"},
+        {name:"小欢啊",age:28,hobby:"运动"},
+        {name:"小雪啊",age:48,hobby:"唱歌"},
+      ]
     },
-    watch:{
-      //在watche侦听器中对被依赖的属性,firstName 和 lastName属性进行监听
-      //当被依赖的这两个属性改变时,立马更新 通过依赖属性拼接成的fullName属性
-      firstName(val){//firstName的侦听回调,
-        console.log('有人修改了firstName')
-        //参数val是其修改后的值 更新fullName
-        this.fullName=`${this.firstName}-${this.lastName} `
-      },
-      lastName(val){//lastName的侦听回调
-        console.log('有人修改了lastName')
-        this.fullName=`${this.firstName}-${this.lastName} `
+    methods:{
+      //根据点击的按钮确定排序类型,让计算属性根据类型进行排序
+      handleUp(){
+        console.log('升序按钮')
+        this.order=1
+      },    
+      handleDown(){
+        console.log('降序按钮')
+        this.order=-1
+      },     
+      handle(){
+        console.log('原本顺序按钮')
+        this.order=0
+      }
+    },
+    computed:{
+      showList(){
+        //filter方法不影响数组 返回一个判断为真的新数组
+         let filterArr =  this.aList.filter((item,index) => {
+            console.log('读取属性')
+            //返回包含该content内容的对象，其会自动形成数组
+            //includes()判断字符串中是否有参数中的字串,有,值为true ,没有,值为假
+            return item.name.includes(this.content)||item.age.toString().includes(this.content)||item.hobby.includes(this.content)
+          })
+          //将过滤出来的属性进行排序,后设置为showlist的值
+          //sort方法影响了原数组 
+          //if else写法
+          // if(this.order===1){
+          //   filterArr.sort((a,b) => {
+          //     //a和b表示是数组中相邻的两项
+          //     return a.age-b.age //表示升序
+          //   })
+          // }else if(this.order===-1){
+          //     filterArr.sort((a,b) => {
+          //     return b.age-a.age //表示降序
+          //   })
+          // }
+          // return filterArr
+          
+          //switch case 写法
+           switch(this.order){
+              case 1:
+                  filterArr.sort((a,b) => {
+                    //a和b表示是数组中相邻的两项
+                    return a.age-b.age //表示升序
+                })
+                break
+              case -1:
+                  filterArr.sort((a,b) => {
+                        return b.age-a.age 
+                    })
+                    break
+              // case 0:
+              //     break
+              default:
+                break
+        }
+        return filterArr
       }
     }
   })
+
+
+  
 </script>
   
 </body>

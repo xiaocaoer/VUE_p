@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>通过watch属性实现全名案例</title>
+<style>
+  span{
+    display: inline-block;
+    width: 50px;
+  }
+</style>
+</head>
+<body>
+  <!-- //模板页面 -->
+  <div id="app">
+    <!--  v-model实现数据双向绑定-->
+    <span>姓:</span><input type="text"placeholder="请输入您的姓" v-model="firstName" ><br>
+    <span>名:</span><input type="text"placeholder="请输入您的名" v-model="lastName" ><br>
+    <span>姓名:</span><input type="text"placeholder="请输入您的姓名" v-model="fullName">
+  </div>
+ 
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+  let vm = new Vue({
+    // template:`<span>哈哈哈</span>`,
+    hobby:"睡觉",
+    // el:'#app',
+    data:{
+      firstName:"小",
+      lastName:"草",
+      fullName:"小-草"
+    },
+    watch:{
+      //在watche侦听器中对被依赖的属性,firstName 和 lastName属性进行监听
+      //当被依赖的这两个属性改变时,立马更新 通过依赖属性拼接成的fullName属性
+      firstName(val){//firstName的侦听回调,
+        console.log('有人修改了firstName')
+        //参数val是其修改后的值 更新fullName
+        this.fullName=`${this.firstName}-${this.lastName} `
+      },
+      lastName(val){//lastName的侦听回调
+        console.log('有人修改了lastName')
+        this.fullName=`${this.firstName}-${this.lastName} `
+
+      }
+    }
+  })
+  // console.log(vm.$root)
+  // console.log(vm.$el)
+  // console.log(vm.$options)
+  // console.log(vm.$options.hobby)
+  // console.log(vm.$data)
+  vm.$mount('#app')
+  
+  // 事件分为 dom事件 和 自定义事件(自己起的任意名字的事件)
+
+  //vm.$on() 给vue实例绑定自定义事件并设置回调
+  // 参数2个,
+      // 第一个 自己起的事件名字,
+      // 第二个 事件触发后的处理回调
+  //注意:自定义事件需要用vm.$emit()方法去触发
+  vm.$on('xiaocaoer',(val)=>{console.log('vm上绑定的自定义事件xiaocaoer被触发',val)})
+ 
+  //vm.$emit()触发vue实例是上的自定义事件 
+  //参数2个或1个
+  //第一个:要触发的自定义事件的名字,
+  //第二个:触发时传给会回调函数的参数
+  vm.$emit('xiaocaoer',111)
+
+  //vm.$once() 给vue实例绑定自定义事件并设置回调,这个回调只会被触发一次
+  // 参数2个,
+      // 第一个 自己起的事件名字,
+      // 第二个 事件触发后的处理回调
+  //注意:自定义事件需要用vm.$emit()方法去触发
+  vm.$once('huahua',(val) => {console.log('只能触发一次的huahua事件被触发了')})
+  vm.$emit('huahua',111)
+  setTimeout(() => {
+    vm.$emit('huahua',111)//这次不会被触发,因为只能触发一次
+  },1000)
+
+
+  vm.$off()
+
+</script>
+  
+</body>
+</html>

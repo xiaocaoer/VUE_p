@@ -31,22 +31,40 @@
       lastName:"草",
       fullName:"小-草"
     },
-    watch:{
-      //在watche侦听器中对被依赖的属性,firstName 和 lastName属性进行监听
-      //当被依赖的这两个属性改变时,立马更新 通过依赖属性拼接成的fullName属性
-      firstName(val){//firstName的侦听回调,
-        console.log('有人修改了firstName')
-        //参数val是其修改后的值 更新fullName
-        this.fullName=`${this.firstName}-${this.lastName} `
-      },
-      lastName(val){//lastName的侦听回调
-        console.log('有人修改了lastName')
-        this.fullName=`${this.firstName}-${this.lastName} `
+    // watch:{
+    //   //在watche侦听器中对被依赖的属性,firstName 和 lastName属性进行监听
+    //   //当被依赖的这两个属性改变时,立马更新 通过依赖属性拼接成的fullName属性
+    //   firstName(val){//firstName的侦听回调,
+    //     console.log('有人修改了firstName')
+    //     //参数val是其修改后的值 更新fullName
+    //     this.fullName=`${this.firstName}-${this.lastName} `
+    //   },
+    //   lastName(val){//lastName的侦听回调
+    //     console.log('有人修改了lastName')
+    //     this.fullName=`${this.firstName}-${this.lastName} `
+    //   }
+    // }
+    //vm.$watch方法监听属性
 
-      }
-    }
+    mounted(){
+      this.$watch('firstName',() => {
+        this.fullName=`${this.firstName}-${this.lastName} `
+      })
+      this.$watch('lastName',() => {
+        this.fullName=`${this.firstName}-${this.lastName} `
+      })
+    }   
+    // mounted(){
+    //   this.$watch('firstName',function(){
+    //     this.fullName=`${this.firstName}-${this.lastName} `
+    //   })
+    //   this.$watch('lastName',function(){
+    //     this.fullName=`${this.firstName}-${this.lastName} `
+    //   })
+    // }
 
   })
+
 </script>
   
 </body>
