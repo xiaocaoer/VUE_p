@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+ 
+  <div id="app">
+    <input type="text" placeholder="请输入内容" v-model="content">
+    <button @click="handleC" >Add</button>
+    <v-demo :list="todoList"></v-demo>
+    <!-- 
+      会自动到根组件options中去找,
+      就将根组件上的数据传给了子组件
+    -->
+  </div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+  Vue.config.productionTip = false
+/*   
+思路:将todoList整个作为一个组件,在根组件中渲染
+  之前没有定义局部或全局组件的时候相当于是将结构数据都放在了根组件中,
+  现在改为结构设计为局部组件或者全局组件的
+
+  1.结构放在局部组件中
+  注意:组件模板只能直接用自己组件data上的数据,不能直接用父组件的数据,各个组件中存储的数据 data是独立的
+  要想使用,就要进行组件间的数据传递
+  
+  注意:页面上响应式的数据要存储在data中, 标签属性可以读到配置对象中data,methods,computed已经props中的内容
+  对于直接写在options中的是没法通过标签读取的,可以通过 vm.$option.属性名的方式去读取其值
+
+ */
+  new Vue({
+    el:"#app",
+    data:{
+      todoList:["吃饭","睡觉","学习"],
+      content:"",
+    },
+    methods:{
+      handleC(){
+        this.todoList.unshift(this.content)
+        this.content = ''
+      }
+    },
+    components:{
+      "v-demo":{
+        template:`    
+            <ul>
+              <li v-for="(item,index) in list" :key="index">{{item}}</li>
+            </ul>`,
+        props:["list"],
+        // data(){
+        //   return  {
+        //       todoList: ["吃饭","睡觉","学习"]
+        //   }
+        // }
+      }
+    }
+  })
+  
+  
+ 
+</script>
+  
+</body>
+</html>

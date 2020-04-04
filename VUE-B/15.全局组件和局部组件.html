@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+</head>
+<body>
+
+<div id="app">
+  <xiao-cao></xiao-cao>
+  <xiao-cao></xiao-cao>
+  <xiao-cao></xiao-cao>
+  <xiao-cao></xiao-cao>
+  <v-huan></v-huan>
+</div>
+
+<div id="wrap">
+  <div>认真一点啦</div>
+  <xiao-cao></xiao-cao>
+  <v-huan></v-huan>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script>
+
+Vue.config.productionTip = false
+  //全局组件
+Vue.component("xiao-cao",{
+  template:`<div>{{todoList}}---<span>阴天快乐</span></div>`,
+  data(){
+    return {
+      todoList:"吃饭,睡觉,打豆豆"
+    }
+  }
+})
+
+let vm = new Vue({
+  el:"#app",
+  data:{//本质data是个函数,在new Vue中可以这么写,但在全局组件中必须写函数形式
+    message:"今天也要非常努力哦",
+  },
+  //局部组件
+  components:{
+    "v-huan":{
+      template:`<div>局部组件内容:{{todoList}}</div>`,
+      data(){
+         return{
+          todoList:'好好学习天天向上'
+         }
+      }
+    },
+  }
+})
+
+new Vue({
+  el:"#wrap",
+})
+
+
+
+
+</script>
+</body>
+</html>
