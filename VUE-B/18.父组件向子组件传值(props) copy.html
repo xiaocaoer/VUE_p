@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父组件给子组件传值及props</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+        <v-demo :news="news" ></v-demo>
+    </div>
+
+    <template id="demo">
+        <div>父组件传递过来的数据是{{news}}</div>
+    </template>
+
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    Vue.config.productionTip=false;
+    /* 
+
+    父组件向子组件中传递
+        组件标签名上的属性值只会去父组件中找,组件模板中的属性值到组件自身中找
+        
+        首先:在父组件中使用子组件,
+        
+        在子组件名的标签上写传递的信息的名字(属性名) 属性值是父组件中的数据
+        子组件中用props来接收,要接收哪个属性,就在props中写哪个属性,
+        接收后就可以在子组件模板中任意使用
+    
+    
+    */
+
+    
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            message:'戒骄戒躁,好好努力',
+            news:"_____这个信息要传给子组件使用"
+        },
+        components:{
+            "v-demo":{
+                template:"#demo",
+                // props:["news"] //数组形式
+                props:{//对象形式，做验证
+                    // news:String//只设定类型，为字符串
+                    news:{//进行多个设置
+                        type:[String],
+                        //对象类型的数据的默认值写成函数形式，函数中return本来的数据
+                        default:"哈哈",
+                        //自定义验证
+                        validator:function(value){
+                            return value.includes("")
+                        }
+                
+                    }
+                    
+                }
+            }
+        }
+    })
+</script>
+</html>

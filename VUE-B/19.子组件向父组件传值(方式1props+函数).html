@@ -2,14 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>子向父传值</title>
 </head>
 <body>
+    <div id="app">
+        <span>父组件中的count值是:</span>{{count}}
+        <v-demo :add="add" :count="count"></v-demo>
+    </div>
 
+    
 </body>
 <script src="../js/vue.js"></script>
 <script>
     Vue.config.productionTip=false;
+/* 
+    需求:当点击子组件div时,让父组件中的数据count+1
+
+ */
+    let demo = {
+        template:`<div @click="handleC">点击让父组件中的count增加,增加后的count值是{{count}}</div>`,
+        props:{
+            add:Function,
+            count:Number
+        },
+        methods:{
+            handleC(){
+                // console.log(this.add)
+                this.add(2)
+            }
+        }
+    }
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            count:1
+        },
+        methods:{
+            add(val){
+                this.count = this.count+val
+            }
+        }, 
+        components:{
+            "v-demo":demo
+        },
+
+    })
+
+// console.log(vm.add)
 
 </script>
 </html>

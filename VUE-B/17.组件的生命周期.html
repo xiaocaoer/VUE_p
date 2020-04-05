@@ -6,23 +6,7 @@
 </head>
 <body>
     <div id="test">
-        <!--
-            1. 一个vue组件就是一个vue实例!!!
-                var v-child = new vueComponent()
-                vueComponent.prototype = Object.create(Vue.prototype)
-                    实现了对象级别的一个继承; vueComponent.prototype.__proto__ = Vue.prototype
-
-                v-child.__proto__ = vueComponent.prototype
-                vueComponent.prototype.__proto__ = Vue.prototype ($on,$emit)
-                Vue.prototype.__proto__ = Object.Prototype
-                Object.Prototype.__proto__ = null
-
-            2. 如果在组件标签上使用事件指令 那么绑定的不是dom事件! 而是vue的自定义事件
-                给v-child这个组件绑定了一个自定义事件 事件名叫click
-                v-child.$on("click",handleC)
-        -->
-        <v-child @click="handleC"></v-child>
-        <div :style="styleObj">今天</div>
+        <div>{{message}}</div>
     </div>
 </body>
 <script src="../js/vue.js"></script>
@@ -31,38 +15,26 @@
     var vm = new Vue({
         el:"#test",
         data:{
-          styleObj:{color:"red"},
+          message:"一万块钱工资太难拿了"
         },
-        methods:{
-            handleC(val){
-                console.log("handleC from root",val)
-            }
-        },
-        components:{
-            "v-child":{
-                template:`<div :style="styleObj" @click="handleC">v-child</div>`,
-                data(){
-                    return {
-                        msg:"msg from v-child",
-                        styleObj:{
-                            width:"100px",
-                            height:"100px",
-                            background:"pink",
-                            textAlign:"center",
-                            lineHeight:"100px"
-                        }
-                    }
-                },
-                methods:{
-                    handleC(){
-                      console.log('111')
-                        // this: 当前的组件对象(vm实例对象)
-                        //v-child.$emit("click",123)
-                        // this.$emit("click",this.msg)
-                    }
-                }
-            }
-        }
+        
+        //初始化事件和生命周期后调,组件实例创建之前
+        beforeCreate(){console.log('组件实例创建之前')},
+        //响应式数据设置完成,组件实例穿创建完毕,
+        created(){console.log('组件实例创建好了')},
+        //挂载之前
+        beforeMount(){console.log('组件挂载之前')},
+        //挂载完毕
+        mounted(){console.log('组件挂载完毕了')},
+        //更新之前
+        beforeUpdate(){console.log('更新之前')},
+        updated(){console.log('更新完毕了')},
+
+        //销毁
+        beforeDestroy(){console.log("管理模板的组件实例即将被销毁")},
+        destroyed(){console.log('管理模板的组件实例被销毁了')},
     })
+
+
 </script>
 </html>

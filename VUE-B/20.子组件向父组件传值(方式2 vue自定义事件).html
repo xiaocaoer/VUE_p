@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue自定义事件实现父组件给子组件传值</title>
+</head>
+<body>
+
+    <!-- 需求:当点击子组件div时,让父组件中的数据count+1 -->
+    
+    <div id="app">
+        <span>我自己的count的值是:</span><span>{{count}}</span>
+        <v-demo @add="add"></v-demo>
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+    Vue.config.productionTip = false
+
+    let demo = {
+        template:`<div @click="handleC">点击这里让父组件中的count增加</div>`,
+        methods:{
+            handleC(){
+                this.$emit("add",5)
+            }
+        }
+    
+    }
+    let vm = new Vue({
+        el:"#app",
+        data:{
+            count:1
+        },
+        methods:{
+            add(val){
+                this.count+=val
+            }
+        },
+        components:{
+            "v-demo":demo,
+        }
+    })
+
+    </script>
+
+</body>
+</html>

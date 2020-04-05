@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父组件给子组件传值及props</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+        <v-demo :count="count" ></v-demo>
+    </div>
+
+    <template id="demo">
+        <div @click="handleC">父组件传递过来的数据是{{myCount}}</div>
+    </template>
+
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    Vue.config.productionTip=false;
+    const demo = {
+        template:"#demo",
+        props:{
+            count:{
+                type:Number,
+                validator(value){
+                    return value>0
+                }
+            }
+        },
+        data(){
+            return {
+                "myCount":this.count
+            }
+        },
+        methods:{
+            handleC(){
+                this.myCount++
+            }
+        }
+    }
+
+    
+    const vm = new Vue({
+        el:"#app",
+        data:{
+            message:'戒骄戒躁,好好努力',
+            count:1
+        },
+        components:{
+            "v-demo":demo
+        }
+    })
+</script>
+</html>
