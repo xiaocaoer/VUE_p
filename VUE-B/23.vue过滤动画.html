@@ -10,12 +10,27 @@
       width: 100px;
       height: 100px;
       background: hotpink;
+      transition: 10s all;
+      opacity: 1;
+    }
+    .v-enter{      
+      background: green;
+      opacity: 0.2;
+      }
+    .v-enter-active{transition: 5s all;} 
+
+    .v-enter-to{    
+      background: hotpink;
+      opacity: 1;
+      }
+      .v-leave
+    .v-leave-active{
       transition: 5s all;
     }
-    .v-enter{}
-    .v-enter-active{transition: 5s all;}
-    .v-enter-to{}
-    .v-enter{}
+    .v-leave-to{
+      background: green;
+      opacity: 0.2;
+    }
     </style>
 </head>
 <body>
