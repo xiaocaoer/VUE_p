@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <v-demo></v-demo>
+        <v-test></v-test>
+    </div>
+</body>
+<script src="../js/vue.js"></script>
+<script src="https://cdn.bootcss.com/pubsub-js/1.7.0/pubsub.js"></script>
+<script>
+    Vue.config.productionTip=false;
+    /*
+     需求:两个兄弟组件,点击a组件,b组件中的内容变成a组件 
+         消息订阅和发布版
+         接收数据方订阅消息
+         传递数据方发布消息
+    */
+    let demo = {
+        template:`<div @click="handleC">{{message}}</div>`,
+        data(){
+           return {
+            message:"点击我让我下面的数据变成我,哈哈哈",
+           }
+        },
+        methods:{
+            handleC(){
+                console.log(this.message)
+                //点击后发布消息,传递数据,参数,发布的消息的名称,消息的内容(携带的数据)
+                PubSub.publish("change",this.message)
+            }
+        }
+    }
+    let test = {
+        template:`<div>{{message}}</div>`,
+        data(){
+            return{
+                message:"我是期待改变的数据"
+            }
+        },
+        mounted(){
+            //订阅新消息,参数,消息名,收到消息后的回调: 注意:收到消息的回调的第一个参数是消息名!!!
+            PubSub.subscribe("change",(name,mess) => {
+                this.message = mess
+            })
+        }
+    }
+   
+    new Vue({
+        el:"#app",
+        components:{
+            "v-demo":demo,
+            "v-test":test,
+        }
+    })
+
+
+</script>
+</html>

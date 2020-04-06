@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="app">
+        <v-demo></v-demo>
+        <v-test></v-test>
+    </div>
+
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    Vue.config.productionTip=false;
+    Vue.prototype.$bus=new Vue()
+    /* 
+
+    需求:两个兄弟组件,点击a组件,b组件中的内容变成a组件
+
+    兄弟组件间传值的思路:
+        1.所有的组件都是一个vue实例,可以共用构造函数Vue原型上的方法
+        2.在原型上定义一个属性,这个属性是个new Vue的实例,实例就是组件,组件就是实例,
+        3.接收传值的一方在钩子函数Mounted中,让原型上的组件绑定一个自定义事件,事件的回调中接收触发时的参数
+        4.传值的一方,在特定的时候,让原型上的组件去触发刚绑定的自定义事件,触发的时候,将自己身上的数据作为参数传递过去,
+        实现兄弟组件间的数据传递
+
+        总结:在原型上设置组件-接收数据的一方中,给实例绑定自定义事件,并在事件触发回调中做操作做接收数据后的操作,
+        发送数据的一方中,触发原型实例是自定义事件,将自己身上的数据作为参数传递过去
+
+    */
+
+    let demo={
+        template:`<div @click="handleC">{{message}}</div>`,
+        data(){
+            return{
+                message:"demo的数据"
+            }
+        },
+        methods:{
+            handleC(){
+                this.$bus.$emit("change",this.message)
+            }
+        }
+
+    }    
+    let test={
+        template:`<div >{{message}}</div>`,
+        data(){
+            return{
+                message:"test的数据"
+            }
+        },
+        mounted(){//挂载完毕之后,给原型上的组件绑定一个自定义事件
+            this.$bus.$on("change",(message) => {
+                this.message = message
+            })
+
+        }
+    }
+
+    let vm = new Vue({
+        el:"#app",
+        components:{
+            "v-demo":demo,
+            "v-test":test
+        }
+    })
+
+
+</script>
+</html>

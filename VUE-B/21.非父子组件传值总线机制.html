@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <v-demo></v-demo>
+        <v-test></v-test>
+    </div>
+
+</body>
+<script src="../js/vue.js"></script>
+<script>
+    Vue.config.productionTip=false;
+
+    /* 
+
+    需求:两个兄弟组件,点击a组件,b组件中的内容变成a组件
+
+    */
+    Vue.prototype.$bus = new Vue()
+    let demo = {
+        template:`<div @click="handleC">{{message}}</div>`,
+        data(){
+            return{
+                message:"点击我让我下面那行文字变得跟我一样,哈哈哈"
+            }
+        },
+        methods:{
+            handleC(){
+                this.$bus.$emit("change",this.message)
+            }
+        }
+        
+    }   
+    let test = {
+        template:`<div>{{message}}</div>`,
+        data(){
+            return{
+                message:"我期待一次改变"
+            }
+        },
+        mounted(){
+            this.$bus.$on("change",(val) => {
+                this.message=val
+            })
+        }
+    }
+
+
+
+    let vm = new Vue({
+        el:"#app",
+        components:{
+            "v-demo":demo,
+            "v-test":test,
+        }
+    })
+    
+
+
+</script>
+</html>

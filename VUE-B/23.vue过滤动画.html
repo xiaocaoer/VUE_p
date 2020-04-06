@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+    <style>
+    .content{
+      width: 100px;
+      height: 100px;
+      background: hotpink;
+      transition: 5s all;
+    }
+    .v-enter{}
+    .v-enter-active{transition: 5s all;}
+    .v-enter-to{}
+    .v-enter{}
+    </style>
+</head>
+<body>
+  
+  <div id="app">
+    <button @click="handleC"> 点击我让下方元素显示或者隐藏</button>
+    <transition>
+      <div class="content" v-show="flag">
+        我是有过渡效果的盒子
+      </div>
+    </transition>
+  </div>
+
+  <script type="text/javascript" src="../js/vue.js"></script>
+  <script>
+  
+  Vue.config.production =  false
+  new Vue({
+    el:"#app",
+    data:{
+      flag:true
+    },
+    methods:{
+      handleC(){
+        this.flag = !this.flag
+      }
+    }
+  })
+
+
+
+  </script>
+</body>
+</html>
