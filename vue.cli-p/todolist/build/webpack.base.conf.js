@@ -33,8 +33,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
-    alias: {
+    alias: {//给文件夹路径设置别名,@表示src文件夹的路径
       '@': resolve('src'),
+      "components":resolve('src/components'),
+      'util':resolve('src/util')
     }
   },
   module: {

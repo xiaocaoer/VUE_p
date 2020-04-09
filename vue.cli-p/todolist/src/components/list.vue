@@ -1,18 +1,24 @@
 <template>
   <ul class="todo-main">
-    <item></item>
+    <todo-item v-for="item in listArr" :key="item.id" :item="item"></todo-item>
   </ul>
 </template>
 
 <script>
-import item from './item'
+import item from './item.vue'
 
 export default {
   name: 'List',
+  components:{
+    "todo-item":item
+  },
+  props:{
+    listArr:Array
+  }
 }
 </script>
 
-<style>
+<style scoped>
 .todo-main {
   margin-left: 0px;
   border: 1px solid #ddd;
